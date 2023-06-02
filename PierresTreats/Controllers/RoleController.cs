@@ -61,9 +61,40 @@ namespace PierresTreats.Controllers
         Members = members,
         NonMembers = nonMembers
       });
-
     }
 
-
+    [HttpPost]
+    public async Task<IActionResult> Update(RoleModification model)
+    {
+      IdentityResult result;
+      if (ModelState.IsValid)
+      {
+        foreach (string userId in model.AddIds ?? new string[] { })
+        {
+          ApplicationUser user = await userManager.FindByIdAsync(userId);
+          if (user != null)
+          {
+            result = await userManager.AddToRoleAsync(user, model.RoleName);
+            if (!result.Succeeded)
+            Errors(result);
+          }
+        }
+        foreach (string userId in model.DeleteIds ?? new string[] { })
+        {
+          ApplicationUser user = await userManager.FindByIdAsync(userId);
+          if (user != null)
+          {
+            result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+            if (!result.Succeeded)
+            Errors(result);
+          }
+        }
+      }
+      if (ModelState.IsValid)
+      return RedirectToAction(nameof(Index));
+      else
+      return await Update(model.RoleName);
+      //^^^^ this may break. Tutorial says RoleId.
+    }
   }
 }
