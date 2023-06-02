@@ -16,7 +16,7 @@ namespace PierresTreats
 
         builder.Services.AddControllersWithViews();
 
-        builder.Services.AddDbContext <PierresTreatsContext > (
+        builder.Services.AddDbContext <PierresTreatsContext> (
                           dbContextOptions => dbContextOptions
                             .UseMySql(
                               builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]

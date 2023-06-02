@@ -5,8 +5,9 @@ namespace PierresTreats.Models
 {
   public class PierresTreatsContext : IdentityDbContext<ApplicationUser>
   {
-    public DbSet<PrimaryModel> PrimaryModel { get; set; }
-    public DbSet<SecondaryModel> SecondaryModel { get; set; }
+    public DbSet<Flavor> Flavors { get; set; }
+    public DbSet<Treat> Treats { get; set; }
+    public DbSet<TreatFlavor> TreatFlavors { get; set; }
 
     public PierresTreatsContext(DbContextOptions options) : base(options) { }
   }
