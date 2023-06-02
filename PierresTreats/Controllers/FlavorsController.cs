@@ -22,15 +22,20 @@ namespace PierresTreats.Controllers
       _db = db;
     }
 
-    public async Task<ActionResult> Index()
+    // public async Task<ActionResult> Index()
+    // {
+    //   string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    //   ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+    //   List<Flavor> model = _db.Flavors
+    //                         .Where(entry => entry.User.Id == currentUser.Id)
+    //                         .Include(model => model.Property)
+    //                         .ToList();
+    //   return View(model);
+    // }
+
+    public ActionResult Index()
     {
-      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-      List<Flavor> model = _db.Flavors
-                            .Where(entry => entry.User.Id == currentUser.Id)
-                            .Include(model => model.Property)
-                            .ToList();
-      return View(model);
+      return View(_db.Flavors.ToList());
     }
 
     public ActionResult Details(int id)
@@ -39,7 +44,7 @@ namespace PierresTreats.Controllers
                               .Include(flavor => flavor.JoinEntities)
                               .ThenInclude(join => join.Treat)
                               .FirstOrDefault(flavor => flavor.FlavorId == id);
-      return View(thisEngineer);
+      return View(thisFlavor);
     }
 
 // READ functions ^^^^
@@ -50,22 +55,57 @@ namespace PierresTreats.Controllers
       return View();
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Create(Flavor flavor)
+    // [HttpPost]
+    // public async Task<ActionResult> Create(Flavor flavor)
+    // {
+    //   if (!ModelState.IsValid)
+    //   {
+    //       return View();
+    //   }
+    //   else
+    //   {
+    //     string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    //     ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+    //     flavor.User = currentUser;
+    //     _db.Flavors.Add(flavor);
+    //     _db.SaveChanges();
+    //     return RedirectToAction("Index");
+    //   }
+    // }
+
+    public ActionResult Create(Flavor flavor)
     {
       if (!ModelState.IsValid)
       {
-          return View();
+        return View();
       }
       else
       {
-        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-        flavor.User = currentUser;
         _db.Flavors.Add(flavor);
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
+    }
+
+    public ActionResult AddTreat(int id)
+    {
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
+      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
+      return View(thisFlavor);
+    }
+
+    [HttpPost]
+    public ActionResult AddTreat(Flavor flavor, int treatId)
+    {
+      #nullable enable
+      TreatFlavor? joinEntity = _db.TreatFlavors.FirstOrDefault(join => (join.TreatId == treatId && join.FlavorId == flavor.FlavorId));
+      #nullable disable
+      if (joinEntity == null && treatId !=0)
+      {
+        _db.TreatFlavors.Add(new TreatFlavor() { TreatId = treatId, FlavorId = flavor.FlavorId});
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = flavor.FlavorId });
     }
   }
 }
