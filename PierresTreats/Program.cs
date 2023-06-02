@@ -28,6 +28,17 @@ namespace PierresTreats
                       .AddEntityFrameworkStores<PierresTreatsContext>()
                       .AddDefaultTokenProviders();
 
+        builder.Services.Configure<IdentityOptions>(options =>
+        {
+          //Default Password Settings.
+          options.Password.RequireDigit = true;
+          options.Password.RequireLowercase = true;
+          options.Password.RequireNonAlphanumeric = true;
+          options.Password.RequireUppercase = true;
+          options.Password.RequiredLength = 6;
+          options.Password.RequiredUniqueChars = 1;
+        });
+
         WebApplication app = builder.Build();
 
         // app.UseDeveloperExceptionPage();
