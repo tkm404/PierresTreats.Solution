@@ -1,0 +1,24 @@
+@{
+  Layout = "_Layout";
+}
+<h2>Treats of Every Variety:</h2>
+<hr />
+
+@using PierresTreats.Models
+
+@if (Model.Count == 0)
+{
+  <p>No Treats on File</p>
+}
+<ul>
+  @foreach (Treat treat in Model)
+  {
+    <li>@Html.ActionLink($"{treat.Name}", "Details", new { id = treat.TreatId})</li>
+  }
+</ul>
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Add a Treat", "Create")</p>
+<p>@Html.ActionLink("See all Flavors", "Index", "Flavors")</p>
+<p>@Html.ActionLink("Create a Flavor", "Create", "Flavors")</p>

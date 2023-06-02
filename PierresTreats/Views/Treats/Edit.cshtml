@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresTreats.Models.Treat
+
+<h2>Edit a Treat</h2>
+
+<h4>Edit this Treat!</h4>
+<h4>@Html.DisplayFor(model => model.Name)</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.TreatId)
+
+  <label>This treat should be called a(n)...? </label>
+  @Html.EditorFor(model => model.Name)
+  <br>
+  <input type="submit" value="Update!">
+}
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("See all Treats", "Index")</p>
+<p>@Html.ActionLink("See all Flavors", "Index", "Flavors")</p>
+<p>@Html.ActionLink("Add Flavors that taste like this Treat!", "AddFlavor", new { id = Model.TreatId })</p>
