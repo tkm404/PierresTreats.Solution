@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PierresTreats.Models
 {
-  public class ModelName
+  public class Flavor
   {
+    public int FlavorId { get; set; }
+    public string Kind { get; set; }
     public ApplicationUser User {get; set; }
   }
 }
