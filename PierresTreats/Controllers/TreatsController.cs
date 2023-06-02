@@ -22,22 +22,13 @@ namespace PierresTreats.Controllers
       _db = db;
     }
 
-    // public async Task<ActionResult> Index()
-    // {
-    //   string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    //   ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-    //   List<Treat> model = _db.Treats
-    //                         .Where(entry => entry.User.Id == currentUser.Id)
-    //                         .Include(model => model.Property)
-    //                         .ToList();
-    //   return View(model);
-    // }
-
+    [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Treats.ToList());
     }
 
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
       Treat thisTreat = _db.Treats
@@ -55,37 +46,24 @@ namespace PierresTreats.Controllers
       return View();
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult> Create(Treat treat)
-    // {
-    //   if (!ModelState.IsValid)
-    //   {
-    //       return View();
-    //   }
-    //   else
-    //   {
-    //     string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    //     ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-    //     treat.User = currentUser;
-    //     _db.Treats.Add(treat);
-    //     _db.SaveChanges();
-    //     return RedirectToAction("Index");
-    //   }
-    // }
-
-    public ActionResult Create(Treat treat)
+    [HttpPost]
+    public async Task<ActionResult> Create(Treat treat)
     {
       if (!ModelState.IsValid)
       {
-        return View();
+          return View();
       }
       else
       {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        treat.User = currentUser;
         _db.Treats.Add(treat);
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
     }
+
 
     public ActionResult AddTreat(int id)
     {
