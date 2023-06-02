@@ -32,7 +32,7 @@ namespace PierresTreats.Controllers
     //                         .ToList();
     //   return View(model);
     // }
-
+    [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Flavors.ToList());
@@ -55,37 +55,38 @@ namespace PierresTreats.Controllers
       return View();
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult> Create(Flavor flavor)
-    // {
-    //   if (!ModelState.IsValid)
-    //   {
-    //       return View();
-    //   }
-    //   else
-    //   {
-    //     string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    //     ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-    //     flavor.User = currentUser;
-    //     _db.Flavors.Add(flavor);
-    //     _db.SaveChanges();
-    //     return RedirectToAction("Index");
-    //   }
-    // }
-
-    public ActionResult Create(Flavor flavor)
+    [HttpPost]
+    public async Task<ActionResult> Create(Flavor flavor)
     {
       if (!ModelState.IsValid)
       {
-        return View();
+          return View(flavor);
       }
       else
       {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        flavor.User = currentUser;
         _db.Flavors.Add(flavor);
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
     }
+
+    // [HttpPost]
+    // public ActionResult Create(Flavor flavor)
+    // {
+    //   if (!ModelState.IsValid)
+    //   {
+    //     return View();
+    //   }
+    //   else
+    //   {
+    //     _db.Flavors.Add(flavor);
+    //     _db.SaveChanges();
+    //     return RedirectToAction("Index");
+    //   }
+    // }
 
     public ActionResult AddTreat(int id)
     {
