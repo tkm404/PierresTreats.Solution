@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresTreats.Models.Flavor
+
+<h2>Design a Flavor!</h2>
+
+<p>@Html.ValidationMessageFor(model => model.Kind, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
+
+@using (Html.BeginForm())
+{
+  <label>If you could sum up this flavor in one word, it would be...? </label>
+  @Html.TextBoxFor(model => model.Kind)
+  <br>
+  <input type="submit" value="Flavor Approved!">
+}
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("See all Flavors", "Index")</p>
+<p>@Html.ActionLink("See all Treats", "Index", "Treats")</p>
