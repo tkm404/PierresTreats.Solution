@@ -1,0 +1,39 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresTreats.Models
+@model PierresTreats.Models.Treat
+
+<h2> Treat Details:</h2>
+<hr />
+
+<h4>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h4>
+
+@if (@Model.JoinEntities.Count == 0)
+{
+  <p>This Treat has no Flavors!</p>
+  <p>(Wait, that can't be right!)</p>
+  <p>@Html.ActionLink("Add Flavors to this Treat", "AddFlavor", new { id = Model.TreatId })</p>
+}
+else
+{
+  <h4>Treat Flavor Profile!</h4>
+  @foreach (TreatFlavor treatFlavor in Model.JoinEntities)
+  {
+    <li>@treatFlavor.Flavor.Kind</li>
+    @using (Html.BeginForm("DeleteJoin", "Treats"))
+    {
+      @Html.Hidden("joinId", @treatFlavor.TreatFlavorId)
+      <input type="submit" value="Delete">
+    }
+  }
+}
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Edit this Treat", "Edit", new { id = Model.TreatId})</p>
+<p>@Html.ActionLink("Delete this Treat", "Delete", new { id = Model.TreatId })</p>
+<p>@Html.ActionLink("Add more Flavors to this Treat!", "AddFlavor", new { id = Model.TreatId })</p>
+<p>@Html.ActionLink("Back to Treats", "Index")</p>
+<p>@Html.ActionLink("Back to Flavors", "Index", "Flavors")</p>

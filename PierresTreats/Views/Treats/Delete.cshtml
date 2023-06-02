@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresTreats.Models.Treat
+
+<h2>Confirm Delete Flavor:</h2>
+
+@Html.DisplayNameFor(model => model.Name): <span> </span> @Html.DisplayFor(model => model.Name)
+
+@using (Html.BeginForm())
+{
+  <p>People just aren't in the market for these right now.</p>
+  <input type="submit" value="Make Room for More Treats!" />
+}
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Edit this Treat", "Edit", new { id = Model.TreatId})</p>
+<p>@Html.ActionLink("Back to Treats", "Index")</p>
+<p>@Html.ActionLink("Back to Flavors", "Index", "Flavors")</p>
