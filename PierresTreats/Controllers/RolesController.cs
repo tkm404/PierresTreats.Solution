@@ -6,14 +6,16 @@ using PierresTreats.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PierresTreats.Controllers
 {
-  public class RoleController : Controller
+  [Authorize]
+  public class RolesController : Controller
   {
     private RoleManager<IdentityRole> roleManager;
     private UserManager<ApplicationUser> userManager;
-    public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> userMgr)
+    public RolesController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> userMgr)
     {
       roleManager = roleMgr;
       userManager = userMgr;
