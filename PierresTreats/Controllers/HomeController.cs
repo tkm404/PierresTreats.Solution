@@ -19,21 +19,33 @@ namespace PierresTreats.Controllers
     _db = db;
   }
 
+  // [HttpGet("/")]
+  // public async Task<ActionResult> Index()
+  // {
+  //   Flavor[] flav = _db.Flavors.ToArray();
+  //   Dictionary<string, object[]> model = new Dictionary<string, object[]>();
+  //   model.Add("categories", cats);
+  //   string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+  //   ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+  //   if (currentUser != null)
+  //   {
+  //     Item[] items = _db.Items
+  //                       .Where(entry => entry.User.Id == currentUser.Id)
+  //                       .ToArray();
+  //     model.Add("items", items);
+  //   }
+  //   return View(model);
+  // }
+
   [HttpGet("/")]
-  public async Task<ActionResult> Index()
+  public ActionResult Index()
   {
-    Category[] cats = _db.Categories.ToArray();
+    Flavor[] flavs = _db.Flavors.ToArray();
+    Treat[] trts = _db.Treats.ToArray();
     Dictionary<string, object[]> model = new Dictionary<string, object[]>();
-    model.Add("categories", cats);
-    string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-    if (currentUser != null)
-    {
-      Item[] items = _db.Items
-                        .Where(entry => entry.User.Id == currentUser.Id)
-                        .ToArray();
-      model.Add("items", items);
-    }
+    model.Add("Flavors", flavs);
+    model.Add("Treats", trts);
+
     return View(model);
   }
 }
