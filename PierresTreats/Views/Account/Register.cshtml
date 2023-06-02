@@ -6,7 +6,7 @@
 
 @model RegisterViewModel
 
-<h2>Register a new user</h2>
+<h2>Register a new Customer Profile</h2>
 <hr />
 
 @if(!ViewData.ModelState.IsValid)
@@ -16,16 +16,17 @@
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
-  @Html.LabelFor(user => user.Email)
-  @Html.TextBoxFor(user=> user.Email)
+  <p>@Html.LabelFor(user => user.Email): 
+  @Html.TextBoxFor(user=> user.Email)</p>
 
-  @Html.LabelFor(user=> user.Password)
-  @Html.EditorFor(user=> user.Password)
+  <p>@Html.LabelFor(user=> user.Password):
+  @Html.EditorFor(user=> user.Password)<br>
+  <em>must be at least 6 characters long, contain a capital, lower case letter, a number, and a special character.</em></p>
 
-  @Html.LabelFor(user=> user.ConfirmPassword)
-  @Html.EditorFor(user=> user.ConfirmPassword)
+  <p>@Html.LabelFor(user=> user.ConfirmPassword):
+  @Html.EditorFor(user=> user.ConfirmPassword)</p>
 
   <input type="submit" value="Register" />
 }
-
+<hr />
 <p>@Html.ActionLink("Back to accounts page", "Index")</p>
