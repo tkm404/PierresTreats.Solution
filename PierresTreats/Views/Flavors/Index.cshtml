@@ -1,0 +1,24 @@
+@{
+  Layout = "_Layout";
+}
+<h2>Flavors of Every Kind:</h2>
+<hr />
+
+@using PierresTreats.Models
+
+@if (Model.Count == 0)
+{
+  <p>No Flavors on File</p>
+}
+<ul>
+  @foreach (Flavor flavor in Model)
+  {
+    <li>@Html.ActionLink($"{flavor.Kind}", "Details", new { id = flavor.FlavorId})</li>
+  }
+</ul>
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Add another Flavor", "Create")</p>
+<p>@Html.ActionLink("See all Treats", "Index", "Treats")</p>
+<p>@Html.ActionLink("Create a Treat", "Create", "Treat")</p>
