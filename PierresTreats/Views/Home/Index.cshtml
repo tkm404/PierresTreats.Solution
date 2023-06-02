@@ -4,23 +4,36 @@
 
 @using PierresTreats.Models;
 
-<h1>Welcome to the To Do List!</h1>
+<h1>Pierre's Sweet and Savory Treats!</h1>
 
 <hr>
 
-<h4>Categories</h4>
-@if (Model["categories"].Length == 0)
+<h4>Flavors</h4>
+@if (Model["Flavors"].Length == 0)
 {
-  <p>No categories have been added yet!</p>
+  <p>No flavors have been added yet!</p>
 } 
 <ul>
-  @foreach (Category cat in Model["categories"])
+  @foreach (Flavor flav in Model["Flavors"])
   {
-    <li>@Html.ActionLink(@cat.Name, "Details", "Categories", new { id = @cat.CategoryId})</li>
+    <li>@Html.ActionLink(@flav.Kind, "Details", "Flavors", new { id = @flav.FlavorId})</li>
   }
 </ul>
 
-@if (User.Identity.IsAuthenticated)
+<h4>Treats</h4>
+@if (Model["Treats"].Length == 0)
+{
+  <p>No Treats have been added yet!</p>
+} 
+<ul>
+  @foreach (Treat trt in Model["Treats"])
+  {
+    <li>@Html.ActionLink(@trt.Name, "Details", "Treats", new { id = @trt.TreatId})</li>
+  }
+</ul>
+
+
+@* @if (User.Identity.IsAuthenticated)
 {
   <h4>Items</h4>
 @if (Model["items"].Length == 0)
@@ -38,12 +51,11 @@ else
 {
   <h4>Items</h4>
   <p>Please @Html.ActionLink("log in", "LogIn", "Account") to view or manage your items.</p>
-}
+} *@
 
 
 <hr>
 
-<p>@Html.ActionLink("Manage items", "Index", "Items")</p> 
-<p>@Html.ActionLink("Manage categories", "Index", "Categories")</p>
-<p>@Html.ActionLink("Manage tags", "Index", "Tags")</p>
+<p>@Html.ActionLink("Manage Flavors", "Index", "Flavors")</p> 
+<p>@Html.ActionLink("Manage Treats", "Index", "Treats")</p>
 <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
