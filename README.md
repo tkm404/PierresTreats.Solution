@@ -1,15 +1,14 @@
-# IMPORTANT TEMPLATE USAGE STUFF IN THE README
-Follow along below, replace with your own work as needed:
+# Pierre's Sweet and Savory Treats
+#### A web application with user authentication and a many-to-many relationship. The app should have the following features:
+* User Authentication - All users have access to read functionality, but only logged in users can create, update, or delete.
+* A many-to-many relationship between ```Treat``` models and ```Flavor``` models. Many treats can be many different flavors.
+* A splash page with a list of each kind of treat and flavor, with links to see all the treats/flavors belonging to a single category.
 
-# TITLE
-#### Brief Description/Overview  
-
-#### By (your name here)  
+#### By Thomas McDowell  
 
 ## Technologies Used:
 * C#
 * .NET 6.0
-* MSTest (if needed)
 * MySql
 
 ## Description:
