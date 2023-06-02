@@ -22,22 +22,13 @@ namespace PierresTreats.Controllers
       _db = db;
     }
 
-    // public async Task<ActionResult> Index()
-    // {
-    //   string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    //   ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-    //   List<Flavor> model = _db.Flavors
-    //                         .Where(entry => entry.User.Id == currentUser.Id)
-    //                         .Include(model => model.Property)
-    //                         .ToList();
-    //   return View(model);
-    // }
     [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Flavors.ToList());
     }
 
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
       Flavor thisFlavor = _db.Flavors
@@ -72,21 +63,6 @@ namespace PierresTreats.Controllers
         return RedirectToAction("Index");
       }
     }
-
-    // [HttpPost]
-    // public ActionResult Create(Flavor flavor)
-    // {
-    //   if (!ModelState.IsValid)
-    //   {
-    //     return View();
-    //   }
-    //   else
-    //   {
-    //     _db.Flavors.Add(flavor);
-    //     _db.SaveChanges();
-    //     return RedirectToAction("Index");
-    //   }
-    // }
 
     public ActionResult AddTreat(int id)
     {
