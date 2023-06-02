@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresTreats.Models.Flavor
+
+<h2>Confirm Delete Flavor:</h2>
+
+@Html.DisplayNameFor(model => model.Kind): <span> </span> @Html.DisplayFor(model => model.Kind)
+
+@using (Html.BeginForm())
+{
+  <p>We used to be huge on this flavor, now we feel kinda meh.</p>
+  <input type="submit" value="Make Room for More Flavors!" />
+}
+
+<hr />
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Edit this Flavor", "Edit", new { id = Model.FlavorId})</p>
+<p>@Html.ActionLink("Back to Flavors", "Index")</p>
+<p>@Html.ActionLink("Back to Treats", "Index", "Treats")</p>
