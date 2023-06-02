@@ -8,11 +8,11 @@ namespace PierresTreats.Controllers
 {
   public class AccountController : Controller
   {
-    private readonly PierresTreats Context _db;
+    private readonly PierresTreatsContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, PierresTreats Context db)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, PierresTreatsContext db)
     {
       _userManager = userManager;
       _signInManager = signInManager;

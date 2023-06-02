@@ -10,10 +10,10 @@ namespace PierresTreats.Controllers
 {
   public class HomeController : Controller
 {
-  private readonly PierresTreats Context _db;
+  private readonly PierresTreatsContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
 
-  public HomeController(UserManager<ApplicationUser> userManager, PierresTreats Context db)
+  public HomeController(UserManager<ApplicationUser> userManager, PierresTreatsContext db)
   {
     _userManager = userManager;
     _db = db;
