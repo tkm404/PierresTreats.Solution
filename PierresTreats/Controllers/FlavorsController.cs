@@ -107,5 +107,28 @@ namespace PierresTreats.Controllers
       }
       return RedirectToAction("Details", new { id = flavor.FlavorId });
     }
+
+// CREATE functions ^^^^
+//------------------------------------------------------------------
+// UPDATE functions vvvv
+
+    public ActionResult Edit(int id)
+    {
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
+      return View(thisFlavor);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Flavor flavor)
+    {
+      _db.Flavors.Update(flavor);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+// UPDATE functions ^^^^
+//------------------------------------------------------------------
+// DELETE functions vvvv
+
   }
 }
