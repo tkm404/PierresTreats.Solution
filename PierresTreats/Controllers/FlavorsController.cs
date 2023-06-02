@@ -12,11 +12,11 @@ using PierresTreats.Models;
 namespace PierresTreats.Controllers
 {
   [Authorize]
-  public class ModelsController : Controller
+  public class FlavorsController : Controller
   {
     private readonly PierresTreatsContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
-    public ModelsController(UserManager<ApplicationUser> userManager, PierresTreatsContext db)
+    public FlavorsController(UserManager<ApplicationUser> userManager, PierresTreatsContext db)
     {
       _userManager = userManager;
       _db = db;
@@ -26,33 +26,43 @@ namespace PierresTreats.Controllers
     {
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-      List<ModelName> model = _db.ModelNames
+      List<Flavor> model = _db.Flavors
                             .Where(entry => entry.User.Id == currentUser.Id)
                             .Include(model => model.Property)
                             .ToList();
       return View(model);
     }
 
+    public ActionResult Details(int id)
+    {
+      Flavor thisFlavor = _db.Flavors
+                              .Include(flavor => flavor.JoinEntities)
+                              .ThenInclude(join => join.Treat)
+                              .FirstOrDefault(flavor => flavor.FlavorId == id);
+      return View(thisEngineer);
+    }
+
+// READ functions ^^^^
+//------------------------------------------------------------------
+// CREATE functions vvvv
     public ActionResult Create()
     {
-      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View();
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(ModelName modelname, int CategoryId)
+    public async Task<ActionResult> Create(Flavor flavor)
     {
       if (!ModelState.IsValid)
       {
-          ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
-          return View(modelname);
+          return View();
       }
       else
       {
         string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-        modelname.User = currentUser;
-        _db.ModelNames.Add(modelname);
+        flavor.User = currentUser;
+        _db.Flavors.Add(flavor);
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
