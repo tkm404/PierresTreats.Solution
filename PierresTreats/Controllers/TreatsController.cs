@@ -34,7 +34,7 @@ namespace PierresTreats.Controllers
     {
       Treat thisTreat = _db.Treats
                               .Include(treat => treat.JoinEntities)
-                              .ThenInclude(join => join.Treat)
+                              .ThenInclude(join => join.Flavor)
                               .FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
@@ -67,15 +67,15 @@ namespace PierresTreats.Controllers
     }
 
     // [Authorize(Roles = "Administrator")]
-    public ActionResult AddTreat(int id)
+    public ActionResult AddFlavor(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
-      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Kind");
       return View(thisTreat);
     }
 
     [HttpPost]
-    public ActionResult AddTreat(Treat treat, int flavorId)
+    public ActionResult AddFlavor(Treat treat, int flavorId)
     {
       #nullable enable
       TreatFlavor? joinEntity = _db.TreatFlavors.FirstOrDefault(join => (join.FlavorId == flavorId && join.TreatId == treat.TreatId));
