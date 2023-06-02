@@ -11,6 +11,7 @@ using PierresTreats.Models;
 
 namespace PierresTreats.Controllers
 {
+   // [Authorize(Roles = "Administrator, Customer")]
   [Authorize]
   public class FlavorsController : Controller
   {
@@ -41,6 +42,8 @@ namespace PierresTreats.Controllers
 // READ functions ^^^^
 //------------------------------------------------------------------
 // CREATE functions vvvv
+
+    // [Authorize(Roles = "Administrator")]
     public ActionResult Create()
     {
       return View();
@@ -64,6 +67,7 @@ namespace PierresTreats.Controllers
       }
     }
 
+    // [Authorize(Roles = "Administrator")]
     public ActionResult AddTreat(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
@@ -89,6 +93,7 @@ namespace PierresTreats.Controllers
 //------------------------------------------------------------------
 // UPDATE functions vvvv
 
+    // [Authorize(Roles = "Administrator")]
     public ActionResult Edit(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
@@ -107,7 +112,7 @@ namespace PierresTreats.Controllers
 //------------------------------------------------------------------
 // DELETE functions vvvv
 
-
+    // [Authorize(Roles = "Administrator")]
     public ActionResult Delete(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
