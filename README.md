@@ -44,7 +44,7 @@ Otherwise, you will be redirected to an Access Denied page.
 The implementation of User Roles is quite shaky. Following the tutorial at [yogihosting.com](https://yogihosting.com/aspnet-core-identity-roles/) is a bit frustrating, as they assume you're working from their previous tutorials using their asp.net setup. Given that this project is written with EF Core, it lead to some wonky workarounds. Presently, CustomTagHelpers don't work with this setup. I think they work as intended when commented in, but they crash the code when they are turned on. That being said, User Roles are working correctly, but there isn't a way to see which users are in which role without following the route to modify them (unless you toggle on TagHelpers...). 
 
 ## License:
-Git your license, yo!
+MIT 2023 Thomas McDowell
 
 ## One More Thing:
 Don't forget to get a picture of your database relations layout with [SQL Designer](https://ondras.zarovi.cz/sql/demo/). Review as needed with [this epicodus lesson](https://www.learnhowtoprogram.com/c-and-net/database-basics/using-sql-designer)
