@@ -88,5 +88,10 @@ namespace PierresTreats.Controllers
       await _signInManager.SignOutAsync();
       return RedirectToAction("Index");
     }
+
+    public IActionResult AccessDenied()
+    {
+      return View();
+    }
   }
 }

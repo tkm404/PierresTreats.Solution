@@ -38,7 +38,9 @@ Long Description / Mission Statement / What the app do.
 
 
 
-(Additional Instructions about how the app do.)
+Login as the Administrator with 
+email: Pierre@PierresBakery.com
+password: 123!@#Qwe
 
 ## Known Bugs:
 Any known bugs here

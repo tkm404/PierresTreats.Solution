@@ -29,11 +29,13 @@ else
     }
   }
 }
+<br>
+@Html.ActionLink("Add more Treats with this Flavor!", "AddTreat", new { id = Model.FlavorId});
 
 <hr />
 <p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
 <p>@Html.ActionLink("Edit this Flavor", "Edit", new { id = Model.FlavorId})</p>
 <p>@Html.ActionLink("Delete this Flavor", "Delete", new { id = Model.FlavorId })</p>
-<p>@Html.ActionLink("Add more Treats that taste like this Flavor!", "AddTreat", new { id = Model.FlavorId })</p>
+<p>@Html.ActionLink("Add more Treats", "Create", "Treats")</p>
 <p>@Html.ActionLink("Back to Flavors", "Index")</p>
 <p>@Html.ActionLink("Back to Treats", "Index", "Treats")</p>

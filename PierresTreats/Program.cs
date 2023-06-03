@@ -40,6 +40,11 @@ namespace PierresTreats
           options.Password.RequiredUniqueChars = 1;
         });
 
+        builder.Services.ConfigureApplicationCookie(opts =>
+        {
+          opts.AccessDeniedPath = "/Stop/Index";
+        });
+
         WebApplication app = builder.Build();
 
         // app.UseDeveloperExceptionPage();
