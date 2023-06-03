@@ -10,6 +10,12 @@
 * C#
 * .NET 6.0
 * MySql
+* ASP.NET Core
+* Entity Framework Core
+* Pomelo Entity Framework Core
+* HTML Helpers
+* Custom Tag Helpers
+* ASP.NET Identity
 
 ## Description:
 Long Description / Mission Statement / What the app do.  
