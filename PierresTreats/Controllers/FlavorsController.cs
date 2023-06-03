@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +10,6 @@ using PierresTreats.Models;
 
 namespace PierresTreats.Controllers
 {
-   // [Authorize(Roles = "Administrator, Customer")]
   [Authorize]
   public class FlavorsController : Controller
   {
@@ -43,7 +41,7 @@ namespace PierresTreats.Controllers
 //------------------------------------------------------------------
 // CREATE functions vvvv
 
-    // [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public ActionResult Create()
     {
       return View();
@@ -67,7 +65,7 @@ namespace PierresTreats.Controllers
       }
     }
 
-    // [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public ActionResult AddTreat(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
@@ -93,7 +91,7 @@ namespace PierresTreats.Controllers
 //------------------------------------------------------------------
 // UPDATE functions vvvv
 
-    // [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public ActionResult Edit(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
@@ -112,7 +110,7 @@ namespace PierresTreats.Controllers
 //------------------------------------------------------------------
 // DELETE functions vvvv
 
-    // [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public ActionResult Delete(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);

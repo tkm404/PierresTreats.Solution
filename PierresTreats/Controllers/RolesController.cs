@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PierresTreats.Controllers
 {
-  [Authorize]
   public class RolesController : Controller
   {
     private RoleManager<IdentityRole> roleManager;
@@ -20,6 +19,8 @@ namespace PierresTreats.Controllers
       roleManager = roleMgr;
       userManager = userMgr;
     }
+
+    [Authorize(Roles = "Administrator")]
     public ViewResult Index() => View(roleManager.Roles);
 
     private void Errors(IdentityResult result)
@@ -28,6 +29,7 @@ namespace PierresTreats.Controllers
         ModelState.AddModelError("", error.Description);
     }
 
+    [Authorize(Roles = "Administrator")]
     public IActionResult Create() => View();
 
     [HttpPost]
@@ -48,6 +50,7 @@ namespace PierresTreats.Controllers
       return View(name);
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Delete(string id)
     {
@@ -65,55 +68,56 @@ namespace PierresTreats.Controllers
       return View("Index", roleManager.Roles);
     }
 
-      public async Task<IActionResult> Update(string id)
-      {
-        IdentityRole role = await roleManager.FindByIdAsync(id);
-        List<ApplicationUser> allUsers = await userManager.Users.ToListAsync();
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> Update(string id)
+    {
+      IdentityRole role = await roleManager.FindByIdAsync(id);
+      List<ApplicationUser> allUsers = await userManager.Users.ToListAsync();
 
-        List<ApplicationUser> members = allUsers
-                                        .Where(user => userManager.IsInRoleAsync(user, role.Name).Result)
-                                        .ToList();
-        List<ApplicationUser> nonMembers = allUsers.Except(members).ToList();
-        return View(new RoleEdit
-        {
-          Role = role,
-          Members = members,
-          NonMembers = nonMembers
-        });
-      }
-
-      [HttpPost]
-      public async Task<IActionResult> Update(RoleModification model)
+      List<ApplicationUser> members = allUsers
+                                      .Where(user => userManager.IsInRoleAsync(user, role.Name).Result)
+                                      .ToList();
+      List<ApplicationUser> nonMembers = allUsers.Except(members).ToList();
+      return View(new RoleEdit
       {
-        IdentityResult result;
-        if (ModelState.IsValid)
+        Role = role,
+        Members = members,
+        NonMembers = nonMembers
+      });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update(RoleModification model)
+    {
+      IdentityResult result;
+      if (ModelState.IsValid)
+      {
+        foreach (string userId in model.AddIds ?? new string[] { })
         {
-          foreach (string userId in model.AddIds ?? new string[] { })
+          ApplicationUser user = await userManager.FindByIdAsync(userId);
+          if (user != null)
           {
-            ApplicationUser user = await userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-              result = await userManager.AddToRoleAsync(user, model.RoleName);
-              if (!result.Succeeded)
-                Errors(result);
-            }
-          }
-          foreach (string userId in model.DeleteIds ?? new string[] { })
-          {
-            ApplicationUser user = await userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-              result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
-              if (!result.Succeeded)
-                Errors(result);
-            }
+            result = await userManager.AddToRoleAsync(user, model.RoleName);
+            if (!result.Succeeded)
+              Errors(result);
           }
         }
-        if (ModelState.IsValid)
-          return RedirectToAction(nameof(Index));
-        else
-          return await Update(model.RoleName);
-        //^^^^ this may break. Tutorial says RoleId.
+        foreach (string userId in model.DeleteIds ?? new string[] { })
+        {
+          ApplicationUser user = await userManager.FindByIdAsync(userId);
+          if (user != null)
+          {
+            result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+            if (!result.Succeeded)
+              Errors(result);
+          }
+        }
       }
+      if (ModelState.IsValid)
+        return RedirectToAction(nameof(Index));
+      else
+        return await Update(model.RoleName);
+      //^^^^ Tutorial says RoleId, but that doesn't work. Not super sure why this doesn't break.
     }
   }
+}
