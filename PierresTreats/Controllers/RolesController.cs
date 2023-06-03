@@ -48,55 +48,72 @@ namespace PierresTreats.Controllers
       return View(name);
     }
 
-    public async Task<IActionResult> Update(string id)
+    [HttpPost]
+    public async Task<IActionResult> Delete(string id)
     {
       IdentityRole role = await roleManager.FindByIdAsync(id);
-      List<ApplicationUser> allUsers = await userManager.Users.ToListAsync();
-
-      List<ApplicationUser> members = allUsers
-                                      .Where(user => userManager.IsInRoleAsync(user, role.Name).Result)
-                                      .ToList();
-      List<ApplicationUser> nonMembers = allUsers.Except(members).ToList();
-      return View(new RoleEdit
+      if (role != null)
       {
-        Role = role,
-        Members = members,
-        NonMembers = nonMembers
-      });
+        IdentityResult result = await roleManager.DeleteAsync(role);
+        if (result.Succeeded)
+          return RedirectToAction("Index");
+        else
+          Errors(result);
+      }
+      else
+        ModelState.AddModelError("", "No role found");
+      return View("Index", roleManager.Roles);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Update(RoleModification model)
-    {
-      IdentityResult result;
-      if (ModelState.IsValid)
+      public async Task<IActionResult> Update(string id)
       {
-        foreach (string userId in model.AddIds ?? new string[] { })
+        IdentityRole role = await roleManager.FindByIdAsync(id);
+        List<ApplicationUser> allUsers = await userManager.Users.ToListAsync();
+
+        List<ApplicationUser> members = allUsers
+                                        .Where(user => userManager.IsInRoleAsync(user, role.Name).Result)
+                                        .ToList();
+        List<ApplicationUser> nonMembers = allUsers.Except(members).ToList();
+        return View(new RoleEdit
         {
-          ApplicationUser user = await userManager.FindByIdAsync(userId);
-          if (user != null)
-          {
-            result = await userManager.AddToRoleAsync(user, model.RoleName);
-            if (!result.Succeeded)
-            Errors(result);
-          }
-        }
-        foreach (string userId in model.DeleteIds ?? new string[] { })
-        {
-          ApplicationUser user = await userManager.FindByIdAsync(userId);
-          if (user != null)
-          {
-            result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
-            if (!result.Succeeded)
-            Errors(result);
-          }
-        }
+          Role = role,
+          Members = members,
+          NonMembers = nonMembers
+        });
       }
-      if (ModelState.IsValid)
-      return RedirectToAction(nameof(Index));
-      else
-      return await Update(model.RoleName);
-      //^^^^ this may break. Tutorial says RoleId.
+
+      [HttpPost]
+      public async Task<IActionResult> Update(RoleModification model)
+      {
+        IdentityResult result;
+        if (ModelState.IsValid)
+        {
+          foreach (string userId in model.AddIds ?? new string[] { })
+          {
+            ApplicationUser user = await userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+              result = await userManager.AddToRoleAsync(user, model.RoleName);
+              if (!result.Succeeded)
+                Errors(result);
+            }
+          }
+          foreach (string userId in model.DeleteIds ?? new string[] { })
+          {
+            ApplicationUser user = await userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+              result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+              if (!result.Succeeded)
+                Errors(result);
+            }
+          }
+        }
+        if (ModelState.IsValid)
+          return RedirectToAction(nameof(Index));
+        else
+          return await Update(model.RoleName);
+        //^^^^ this may break. Tutorial says RoleId.
+      }
     }
   }
-}
