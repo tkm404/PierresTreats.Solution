@@ -34,16 +34,14 @@ Long Description / Mission Statement / What the app do.
 
 6. Run ```dotnet watch run``` to view the project in your web browser. Enter your computer password when prompted.
 
-
-
-
-
-Login as the Administrator with 
+7. In order to see the app's full functionality, log in as the Administrator with 
 email: Pierre@PierresBakery.com
 password: 123!@#Qwe
 
+Otherwise, you will be redirected to an Access Denied page.
+
 ## Known Bugs:
-Any known bugs here
+The implementation of User Roles is quite shaky. Following the tutorial at [yogihosting.com](https://yogihosting.com/aspnet-core-identity-roles/) is a bit frustrating, as they assume you're working from their previous tutorials using their asp.net setup. Given that this project is written with EF Core, it lead to some wonky workarounds. Presently, CustomTagHelpers don't work with this setup. I think they work as intended when commented in, but they crash the code when they are turned on. That being said, User Roles are working correctly, but there isn't a way to see which users are in which role without following the route to modify them (unless you toggle on TagHelpers...). 
 
 ## License:
 Git your license, yo!
