@@ -10,16 +10,24 @@
 * C#
 * .NET 6.0
 * MySql
+* ASP.NET Core
+* Entity Framework Core
+* Pomelo Entity Framework Core
+* HTML Helpers
+* Custom Tag Helpers
+* ASP.NET Identity
 
 ## Description:
-Long Description / Mission Statement / What the app do.  
+This is a web application built with VS Code for the 11th Independent Code Review for Epicodus Coding program. There is a demonstration of a Many-to-Many relationship between Treats and Flavors, and an authorization level between general users, customers, and administrators. Administrators have control over the Create, Delete, and Update functions for Flavors and Treats. Customers and non-roled users have Read functionality. An unauthorized user will be redirected to an Access Denied page if they try to Create, Delete or Update.
+
+At time of writing, Administrators are allowed to update roles, but I will do some more research on how to make that happen without exposing sensitive information in this README. Role-Based Authorization was explored by following a tutorial suggested by Epicodus at [yogihosting.com](https://yogihosting.com/aspnet-core-identity-roles/), but some modifications needed to be made in order to make their process compatible with a single-thread database connection via EF Core. Namely, the process outlined at YogiHosting for compling a list of Member and Non-Member users had to be subverted by compiling the list entirely before continuing on with the rest of that function in the Roles controller section. Secondly the Custom Tag Helpers had to be disabled because they caused the same code-crashing error (can't have multiple Sql connections running in parallel). There seems to be more documentation at YogiHosting that points to other tutorials in the same track that could clear up some of the confusion, but I didn't find the time to explore any deeper than Roles Authorization.
 
 ## Setup/Installation Req's:
 
 ### Set Up and Run Project
 1. Clone this repo.
-2. Open the terminal and navigate to this project's production directory called "BracketTracker". 
-3. Within the production directory "BracketTracker", create a new file called `appsettings.json`.
+2. Open the terminal and navigate to this project's production directory called "PierresTreats". 
+3. Within the production directory "PierresTreats", create a new file called `appsettings.json`.
 4. Within `appsettings.json`, put in the following code, replacing the `uid` and `pwd` values with your own username and password for MySQL. For the LearnHowToProgram.com lessons, we always assume the `uid` is `root` and the `pwd` is `epicodus`.
 
 ```json
@@ -30,7 +38,7 @@ Long Description / Mission Statement / What the app do.
 }
 ```
 
-5. Set up the Database. In your terminal in the project directory (BracketTracker.Solution/BracketTracker), run ```dotnet ef database update```
+5. Set up the Database. In your terminal in the project directory (PierresTreats.Solution/PierresTreats), run ```dotnet ef database update```
 
 6. Run ```dotnet watch run``` to view the project in your web browser. Enter your computer password when prompted.
 
@@ -44,9 +52,7 @@ Otherwise, you will be redirected to an Access Denied page.
 The implementation of User Roles is quite shaky. Following the tutorial at [yogihosting.com](https://yogihosting.com/aspnet-core-identity-roles/) is a bit frustrating, as they assume you're working from their previous tutorials using their asp.net setup. Given that this project is written with EF Core, it lead to some wonky workarounds. Presently, CustomTagHelpers don't work with this setup. I think they work as intended when commented in, but they crash the code when they are turned on. That being said, User Roles are working correctly, but there isn't a way to see which users are in which role without following the route to modify them (unless you toggle on TagHelpers...). 
 
 ## License:
-Git your license, yo!
+MIT Copyright (C) 2023 Thomas McDowell
 
-## One More Thing:
-Don't forget to get a picture of your database relations layout with [SQL Designer](https://ondras.zarovi.cz/sql/demo/). Review as needed with [this epicodus lesson](https://www.learnhowtoprogram.com/c-and-net/database-basics/using-sql-designer)
-
-Testing
+## Database Structure
+![image of schema connections](./PierresTreats/wwwroot/img/Database_PierresTreats.png)
