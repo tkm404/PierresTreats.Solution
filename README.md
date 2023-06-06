@@ -54,7 +54,5 @@ The implementation of User Roles is quite shaky. Following the tutorial at [yogi
 ## License:
 MIT Copyright (C) 2023 Thomas McDowell
 
-## One More Thing:
-Don't forget to get a picture of your database relations layout with [SQL Designer](https://ondras.zarovi.cz/sql/demo/). Review as needed with [this epicodus lesson](https://www.learnhowtoprogram.com/c-and-net/database-basics/using-sql-designer)
-
-Testing
+## Database Structure
+![image of schema connections](./PierresTreats/wwwroot/img/Database_PierresTreats.png)
