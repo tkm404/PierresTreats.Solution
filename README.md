@@ -33,7 +33,7 @@ At time of writing, Administrators are allowed to update roles, but I will do so
 ```json
 {
   "ConnectionStrings": {
-      "DefaultConnection": "Server=localhost;Port=3306;database=bracket_tracker;uid=[YOUR SQL USERNAME];pwd=[YOUR SQL PASSWORD];"
+      "DefaultConnection": "Server=localhost;Port=3306;database=pierres_treats;uid=[YOUR SQL USERNAME];pwd=[YOUR SQL PASSWORD];"
   }
 }
 ```
