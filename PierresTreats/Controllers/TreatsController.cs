@@ -37,13 +37,21 @@ namespace PierresTreats.Controllers
       return View(thisTreat);
     }
 
-// READ functions ^^^^
-//------------------------------------------------------------------
-// CREATE functions vvvv
+    // READ functions ^^^^
+    //------------------------------------------------------------------
+    // CREATE functions vvvv
     [Authorize(Roles = "Administrator")]
     public ActionResult Create()
     {
-      return View();
+      try
+      {
+        return View();
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+
     }
 
     [HttpPost]
@@ -51,7 +59,7 @@ namespace PierresTreats.Controllers
     {
       if (!ModelState.IsValid)
       {
-          return View();
+        return View();
       }
       else
       {
@@ -67,34 +75,51 @@ namespace PierresTreats.Controllers
     [Authorize(Roles = "Administrator")]
     public ActionResult AddFlavor(int id)
     {
-      Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
-      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Kind");
-      return View(thisTreat);
+
+      try
+      {
+        Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
+        ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Kind");
+        return View(thisTreat);
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+
     }
 
     [HttpPost]
     public ActionResult AddFlavor(Treat treat, int flavorId)
     {
-      #nullable enable
+#nullable enable
       TreatFlavor? joinEntity = _db.TreatFlavors.FirstOrDefault(join => (join.FlavorId == flavorId && join.TreatId == treat.TreatId));
-      #nullable disable
-      if (joinEntity == null && flavorId !=0)
+#nullable disable
+      if (joinEntity == null && flavorId != 0)
       {
-        _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavorId, TreatId = treat.TreatId});
+        _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavorId, TreatId = treat.TreatId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = treat.TreatId });
     }
 
-// CREATE functions ^^^^
-//------------------------------------------------------------------
-// UPDATE functions vvvv
+    // CREATE functions ^^^^
+    //------------------------------------------------------------------
+    // UPDATE functions vvvv
 
     [Authorize(Roles = "Administrator")]
     public ActionResult Edit(int id)
     {
-      Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
-      return View(thisTreat);
+      try
+      {
+        Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
+        return View(thisTreat);
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+
     }
 
     [HttpPost]
@@ -105,16 +130,24 @@ namespace PierresTreats.Controllers
       return RedirectToAction("Index");
     }
 
-// UPDATE functions ^^^^
-//------------------------------------------------------------------
-// DELETE functions vvvv
+    // UPDATE functions ^^^^
+    //------------------------------------------------------------------
+    // DELETE functions vvvv
 
 
     [Authorize(Roles = "Administrator")]
     public ActionResult Delete(int id)
     {
-      Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
-      return View(thisTreat);
+      try
+      {
+        Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
+        return View(thisTreat);
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+
     }
 
     [HttpPost, ActionName("Delete")]
@@ -126,13 +159,22 @@ namespace PierresTreats.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {
-      TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(e => e.TreatFlavorId == joinId);
-      _db.TreatFlavors.Remove(joinEntry);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      try
+      {
+        TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(e => e.TreatFlavorId == joinId);
+        _db.TreatFlavors.Remove(joinEntry);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+
     }
 
     // DELETE functions ^^^^

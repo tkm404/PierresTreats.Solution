@@ -21,7 +21,17 @@ namespace PierresTreats.Controllers
     }
 
     [Authorize(Roles = "Administrator")]
-    public ViewResult Index() => View(roleManager.Roles);
+    public ActionResult Index()
+    {
+      try
+      {
+        return View(roleManager.Roles);
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+    }
 
     private void Errors(IdentityResult result)
     {
@@ -71,19 +81,28 @@ namespace PierresTreats.Controllers
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Update(string id)
     {
-      IdentityRole role = await roleManager.FindByIdAsync(id);
-      List<ApplicationUser> allUsers = await userManager.Users.ToListAsync();
-
-      List<ApplicationUser> members = allUsers
-                                      .Where(user => userManager.IsInRoleAsync(user, role.Name).Result)
-                                      .ToList();
-      List<ApplicationUser> nonMembers = allUsers.Except(members).ToList();
-      return View(new RoleEdit
+      try
       {
-        Role = role,
-        Members = members,
-        NonMembers = nonMembers
-      });
+        IdentityRole role = await roleManager.FindByIdAsync(id);
+        List<ApplicationUser> allUsers = await userManager.Users.ToListAsync();
+
+        List<ApplicationUser> members = allUsers
+                                        .Where(user => userManager.IsInRoleAsync(user, role.Name).Result)
+                                        .ToList();
+        List<ApplicationUser> nonMembers = allUsers.Except(members).ToList();
+        return View(new RoleEdit
+        {
+          Role = role,
+          Members = members,
+          NonMembers = nonMembers
+        });
+      }
+      catch
+      {
+        return View("Accounts", "AccessDenied");
+      }
+
+
     }
 
     [HttpPost]
