@@ -48,15 +48,15 @@ At time of writing, Administrators are allowed to update roles, but I will do so
 6. Run ```dotnet watch run``` to view the project in your web browser. Enter your computer password when prompted.
 
 7. In order to see the app's full functionality, you will need to set up an Administrator. Do the following, otherwise, you will be redirected to an Access Denied page:
-    7a.  Click the link "Create or manage an account" on the Home Page.
-    7b.  Click the link "Register" on the view titled "Authentification with Identity."
-    7c.  Enter an email address in the format ```name@place.com``` and a password consisting of 6 characters; a number, an upper and lower case letter, and a special character.
-    7d.  Log in with that email and password using the link "Log In" on the "Authentification with Identity" page.
-    7e.  Click the link "Manage Roles."
-    7f.  Click the button labeled "Create a Role."
-    7g.  Enter the word "Administrator" and click the button labeled "Create."
-    7h.  Click the button labeled "Update."
-    7i.  Toggle the checkbox corresponding to your entered email, then click the button labeled "Save."
+    *  Click the link "Create or manage an account" on the Home Page.
+    *  Click the link "Register" on the view titled "Authentification with Identity."
+    *  Enter an email address in the format ```name@place.com``` and a password consisting of 6 characters; a number, an upper and lower case letter, and a special character.
+    *  Log in with that email and password using the link "Log In" on the "Authentification with Identity" page.
+    *  Click the link "Manage Roles."
+    *  Click the button labeled "Create a Role."
+    *  Enter the word "Administrator" and click the button labeled "Create."
+    *  Click the button labeled "Update."
+    *  Toggle the checkbox corresponding to your entered email, then click the button labeled "Save."
    
 9. Navigate back to the home page by clicking the link at the bottom of the screen.
 10. Create, Delete, and Edit as you please with the Admin role. Add another user without a role to the site to see the Access Denied page.
