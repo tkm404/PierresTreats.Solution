@@ -20,7 +20,7 @@ namespace PierresTreats.Controllers
       userManager = userMgr;
     }
 
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public ActionResult Index()
     {
       try
@@ -39,7 +39,7 @@ namespace PierresTreats.Controllers
         ModelState.AddModelError("", error.Description);
     }
 
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult Create() => View();
 
     [HttpPost]
@@ -60,7 +60,7 @@ namespace PierresTreats.Controllers
       return View(name);
     }
 
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Delete(string id)
     {
@@ -78,7 +78,7 @@ namespace PierresTreats.Controllers
       return View("Index", roleManager.Roles);
     }
 
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Update(string id)
     {
       try
