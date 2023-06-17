@@ -47,11 +47,20 @@ At time of writing, Administrators are allowed to update roles, but I will do so
 
 6. Run ```dotnet watch run``` to view the project in your web browser. Enter your computer password when prompted.
 
-7. In order to see the app's full functionality, log in as the Administrator with 
-email: Pierre@PierresBakery.com
-password: 123!@#Qwe
+7. In order to see the app's full functionality, you will need to set up an Administrator. Do the following, otherwise, you will be redirected to an Access Denied page:
+    7a.  Click the link "Create or manage an account" on the Home Page.
+    7b.  Click the link "Register" on the view titled "Authentification with Identity."
+    7c.  Enter an email address in the format ```name@place.com``` and a password consisting of 6 characters; a number, an upper and lower case letter, and a special character.
+    7d.  Log in with that email and password using the link "Log In" on the "Authentification with Identity" page.
+    7e.  Click the link "Manage Roles."
+    7f.  Click the button labeled "Create a Role."
+    7g.  Enter the word "Administrator" and click the button labeled "Create."
+    7h.  Click the button labeled "Update."
+    7i.  Toggle the checkbox corresponding to your entered email, then click the button labeled "Save."
+   
+9. Navigate back to the home page by clicking the link at the bottom of the screen.
+10. Create, Delete, and Edit as you please with the Admin role. Add another user without a role to the site to see the Access Denied page.
 
-Otherwise, you will be redirected to an Access Denied page.
 
 ## Known Bugs:
 The implementation of User Roles is quite shaky. Following the tutorial at [yogihosting.com](https://yogihosting.com/aspnet-core-identity-roles/) is a bit frustrating, as they assume you're working from their previous tutorials using their asp.net setup. Given that this project is written with EF Core, it lead to some wonky workarounds. Presently, CustomTagHelpers don't work with this setup. I think they work as intended when commented in, but they crash the code when they are turned on. That being said, User Roles are working correctly, but there isn't a way to see which users are in which role without following the route to modify them (unless you toggle on TagHelpers...).
